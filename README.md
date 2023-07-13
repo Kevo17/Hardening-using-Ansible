@@ -17,16 +17,6 @@ This lab focuses on using Ansible to implement system hardening practices, which
 
 <h2>Program walk-through:</h2>
 
-First, we need to install the Ansible program: <br/>
-- pip3 install ansible==6.4.0<br/>
- 
-<p align="center">
-<img src="https://i.imgur.com/DUwt3ZK.png" height="80%" width="80%" alt="Disk Sanitization Step"/>
-</p>
-
-<br />
-<br />
-
 First, we need to install the ansible and ansible-lint programs: <br/>
 - pip3 install ansible==6.4.0 ansible-lint==6.8.1<br/>
  
