@@ -18,8 +18,9 @@ This lab focuses on using Ansible to implement system hardening practices, which
 <h2>Program walk-through:</h2>
 
 First, we need to install the ansible and ansible-lint programs: <br/>
-- pip3 install ansible==6.4.0 ansible-lint==6.8.1<br/>
- 
+```
+pip3 install ansible==6.4.0 ansible-lint==6.8.1
+```
 <p align="center">
 <img src="https://i.imgur.com/w9uodZr.png" height="80%" width="80%" alt="Disk Sanitization Step"/>
 </p>
@@ -38,7 +39,9 @@ Let’s create the inventory or CMDB file for Ansible using the following comman
 <br />
 
 Next, we will have to ensure the SSH’s yes/no prompt is not shown while running the ansible commands, so we will be using ssh-keyscan to capture the key signatures beforehand: <br/>
-- ssh-keyscan -t rsa prod-rcgsg0ei devsecops-box-rcgsg0ei >> ~/.ssh/known_hosts
+```
+ssh-keyscan -t rsa prod-rcgsg0ei devsecops-box-rcgsg0ei >> ~/.ssh/known_hosts
+```
 <br/>
  
 <p align="center">
@@ -49,8 +52,9 @@ Next, we will have to ensure the SSH’s yes/no prompt is not shown while runnin
 <br />
 
 We can use apt ansible module to install the ntp service on the production machine: <br/>
-- ansible -i inventory.ini prod -m apt -a "name=ntp state=present"<br/>
- 
+```
+ansible -i inventory.ini prod -m apt -a "name=ntp state=present"
+```
 <p align="center">
 <img src="https://i.imgur.com/GlbpKxA.png" height="80%" width="80%" alt="Disk Sanitization Step"/>
 </p>
@@ -59,8 +63,9 @@ We can use apt ansible module to install the ntp service on the production machi
 <br />
 
 Instead of restricting the commands to the prod machine, let’s find the bash version installed on all the machines in the inventory file: <br/>
-- ansible -i inventory.ini all -m command -a "bash --version"<br/>
- 
+```
+ansible -i inventory.ini all -m command -a "bash --version"
+``` 
 <p align="center">
 <img src="https://i.imgur.com/7rrx8V9.png" height="80%" width="80%" alt="Disk Sanitization Step"/>
 </p>
@@ -69,8 +74,9 @@ Instead of restricting the commands to the prod machine, let’s find the bash v
 <br />
 
 Use the Ansible command module to find shell module: <br/>
-- ansible-doc -l | grep shell<br/>
- 
+```
+ansible-doc -l | grep shell
+``` 
 <p align="center">
 <img src="https://i.imgur.com/kx817sr.png" height="80%" width="80%" alt="Disk Sanitization Step"/>
 </p>
@@ -79,8 +85,9 @@ Use the Ansible command module to find shell module: <br/>
 <br />
 
 Use inventory file (-i inventory.ini) and run the uptime command on the production machine using shell module: <br/>
-- ansible -i inventory.ini prod -m shell -a "uptime"<br/>
- 
+```
+ansible -i inventory.ini prod -m shell -a "uptime"
+``` 
 <p align="center">
 <img src="https://i.imgur.com/zjjegjV.png" height="80%" width="80%" alt="Disk Sanitization Step"/>
 </p>
@@ -88,7 +95,8 @@ Use inventory file (-i inventory.ini) and run the uptime command on the producti
 <br />
 <br />
 
-Let’s create a playbook to run against the production environment: <br/>
+Let’s create a playbook to run against the production environment: 
+
 <br/>
  
 <p align="center">
@@ -99,8 +107,9 @@ Let’s create a playbook to run against the production environment: <br/>
 <br />
 
 Let’s run this playbook against the prod machine: <br/>
-- ansible-playbook -i inventory.ini playbook.yml<br/>
- 
+```
+ansible-playbook -i inventory.ini playbook.yml
+``` 
 <p align="center">
 <img src="https://i.imgur.com/LE1wWPF.png" height="80%" width="80%" alt="Disk Sanitization Step"/>
 </p>
@@ -109,8 +118,9 @@ Let’s run this playbook against the prod machine: <br/>
 <br />
 
 Try running the above ansible command once again: <br/>
-- ansible-playbook -i inventory.ini playbook.yml<br/>
- 
+```
+ansible-playbook -i inventory.ini playbook.yml
+``` 
 <p align="center">
 <img src="https://i.imgur.com/hGA7eBy.png" height="80%" width="80%" alt="Disk Sanitization Step"/>
 </p>
@@ -119,8 +129,9 @@ Try running the above ansible command once again: <br/>
 <br />
 
 Create a new directory /challenge and create a playbook.yml file inside the /challenge directory. You can use the above playbook.yml syntax as a starter for this task, but the /challenge/playbook.yml needs to use the secfigo.terraform role to install the Terraform utility: <br/>
-- ansible-playbook -i inventory.ini playbook.yml<br/>
- 
+```
+ansible-playbook -i inventory.ini playbook.yml
+``` 
 <p align="center">
 <img src="https://i.imgur.com/OuhwpUd.png" height="80%" width="80%" alt="Disk Sanitization Step"/>
 </p>
@@ -129,8 +140,9 @@ Create a new directory /challenge and create a playbook.yml file inside the /cha
 <br />
 
 Install secfigo.terraform role using ansible-galaxy: <br/>
-- ansible-galaxy install secfigo.terraform<br/>
- 
+```
+ansible-galaxy install secfigo.terraform
+``` 
 <p align="center">
 <img src="https://i.imgur.com/QcmQiw3.png" height="80%" width="80%" alt="Disk Sanitization Step"/>
 </p>
@@ -139,8 +151,9 @@ Install secfigo.terraform role using ansible-galaxy: <br/>
 <br />
 
 Execute the /challenge/playbook.yml against the prod machine to install the Terraform utility. Optionally put this hardening job in the CI pipeline: <br/>
-- ansible-playbook -i /challenge/inventory.ini /challenge/playbook.yml<br/>
- 
+```
+ansible-playbook -i /challenge/inventory.ini /challenge/playbook.yml
+``` 
 <p align="center">
 <img src="https://i.imgur.com/VSPbFvi.png" height="80%" width="80%" alt="Disk Sanitization Step"/>
 </p>
@@ -150,8 +163,9 @@ Execute the /challenge/playbook.yml against the prod machine to install the Terr
 
 Ansible galaxy helps you in storing open source Ansible roles.
 Let’s explore the options it provides us: <br/>
-- ansible-galaxy role --help<br/>
- 
+```
+ansible-galaxy role --help
+``` 
 <p align="center">
 <img src="https://i.imgur.com/OWc6MuL.png" height="80%" width="80%" alt="Disk Sanitization Step"/>
 </p>
@@ -160,8 +174,9 @@ Let’s explore the options it provides us: <br/>
 <br />
 
 We can search for desired roles using the search option: <br/>
-- ansible-galaxy search terraform<br/>
- 
+```
+ansible-galaxy search terraform
+``` 
 <p align="center">
 <img src="https://i.imgur.com/LVsHkAX.png" height="80%" width="80%" alt="Disk Sanitization Step"/>
 </p>
@@ -170,8 +185,9 @@ We can search for desired roles using the search option: <br/>
 <br />
 
 It’s a long list, but we will choose the secfigo.terraform role from the search results: <br/>
-- ansible-galaxy install secfigo.terraform<br/>
- 
+```
+ansible-galaxy install secfigo.terraform
+``` 
 <p align="center">
 <img src="https://i.imgur.com/0S2gMC3.png" height="80%" width="80%" alt="Disk Sanitization Step"/>
 </p>
@@ -189,8 +205,9 @@ Let’s create a directory and playbook to install the terraform on the producti
 <br />
 
 Let’s run this playbook against the prod machine to install the Terraform utility: <br/>
-- ansible-playbook -i /challenge/inventory.ini /challenge/playbook.yml<br/>
- 
+```
+ansible-playbook -i /challenge/inventory.ini /challenge/playbook.yml
+``` 
 <p align="center">
 <img src="https://i.imgur.com/KflVRd7.png" height="80%" width="80%" alt="Disk Sanitization Step"/>
 </p>
@@ -208,8 +225,9 @@ Create a new directory /hardening and create an ansible-hardening.yml file insid
 <br />
 
 Install dev-sec.os-hardening role from ansible-galaxy: <br/>
-- ansible-galaxy install dev-sec.os-hardening<br/>
- 
+```
+ansible-galaxy install dev-sec.os-hardening
+``` 
 <p align="center">
 <img src="https://i.imgur.com/8YAa9PD.png" height="80%" width="80%" alt="Disk Sanitization Step"/>
 </p>
@@ -218,8 +236,9 @@ Install dev-sec.os-hardening role from ansible-galaxy: <br/>
 <br />
 
 Execute the /hardening/ansible-hardening.yml to harden the Ubuntu production machine. Optionally put this hardening job in the CI pipeline: <br/>
-- ansible-playbook -i /hardening/inventory.ini /hardening/ansible-hardening.yml<br/>
- 
+```
+ansible-playbook -i /hardening/inventory.ini /hardening/ansible-hardening.yml
+``` 
 <p align="center">
 <img src="https://i.imgur.com/fdlg4eI.png" height="80%" width="80%" alt="Disk Sanitization Step"/>
 </p>
